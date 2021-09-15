@@ -66,6 +66,7 @@ func init() {
 	)
 	search := beego.NewNamespace(prefix + "/search",
 		beego.NSRouter("/sqlSearchBlog", &web.SearchRestApi{}, "get:SqlSearchBlog"),
+		beego.NSRouter("/getSearchModel", &web.SearchRestApi{}, "get:GetSearchModel"),
 		beego.NSRouter("/searchBlogByTag", &web.SearchRestApi{}, "get:SearchBlogByTag"),
 		beego.NSRouter("/searchBlogByAuthor", &web.SearchRestApi{}, "get:SearchBlogByAuthor"),
 		beego.NSRouter("/searchBlogBySort", &web.SearchRestApi{}, "get:SearchBlogBySort"),

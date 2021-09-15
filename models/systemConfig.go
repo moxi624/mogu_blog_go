@@ -42,7 +42,8 @@ type SystemConfig struct {
 	OpenDashboardNotification string    `json:"openDashboardNotification"`
 	DashboardNotification     string    `gorm:"type:text" json:"dashboardNotification"`
 	ContentPicturePriority    string    `json:"contentPicturePriority"`
-	OpenEmailActivate    string    `json:"openEmailActivate"`
+	OpenEmailActivate         string    `json:"openEmailActivate"`
+	SearchModel               string    `json:"searchModel"`
 }
 
 func (SystemConfig) TableName() string {

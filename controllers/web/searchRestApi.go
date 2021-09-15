@@ -98,6 +98,13 @@ func (c *SearchRestApi) SqlSearchBlog() {
 	}
 }
 
+// 获取搜索模式
+func (c *SearchRestApi) GetSearchModel() {
+	m := service.SystemConfigService.GetConfig()
+	systemConfig := m["data"].(models.SystemConfig)
+	c.SuccessWithData(systemConfig.SearchModel)
+}
+
 func (c *SearchRestApi) SearchBlogByTag() {
 	tagUid := c.GetString("tagUid")
 	currentPage, _ := c.GetInt("currentPage", 1)

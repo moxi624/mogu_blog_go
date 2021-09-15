@@ -17,7 +17,7 @@
 陌溪前两天为了测试，特意 **fork** 了老林的 **mogu-go-v2** 仓库，同时解决了目前存在的一些问题，因此小伙伴们在拉取代码的时候，可以使用 **git** 命令直接拉取我 **fork** 的仓库。
 
 ```bash
-git clone https://gitee.com/moxi159753/mogu-go-v2.git
+git clone https://gitee.com/moxi159753/mogu_blog_go.git
 ```
 
 下图是拉取仓库后的样子

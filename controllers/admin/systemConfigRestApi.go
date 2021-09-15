@@ -78,6 +78,7 @@ func (c *SystemConfigRestApi) EditSystemConfig() {
 			OpenDashboardNotification: openDashboardNotification,
 			DashboardNotification:     systemConfigVO.DashboardNotification,
 			ContentPicturePriority:    contentPicturePriority,
+			SearchModel:    		   systemConfigVO.SearchModel,
 		}
 		common.DB.Create(&systemConfig)
 	default:
@@ -115,6 +116,7 @@ func (c *SystemConfigRestApi) EditSystemConfig() {
 		systemConfig.OpenDashboardNotification = openDashboardNotification
 		systemConfig.DashboardNotification = systemConfigVO.DashboardNotification
 		systemConfig.ContentPicturePriority = contentPicturePriority
+		systemConfig.SearchModel = systemConfigVO.SearchModel
 		common.DB.Save(&systemConfig)
 	}
 	common.RedisUtil.Delete("SYSTEM_CONFIG")

@@ -115,7 +115,8 @@ func (c *LoginRestAPI) Login() {
 }
 
 func (c *LoginRestAPI) Info() {
-	tokenData := c.GetString("token")
+	header := c.Ctx.Request.Header
+	tokenData := header.Get("Authorization")
 	m := map[string]interface{}{}
 	if tokenData == "" {
 		c.Result("error", "token用户过期")

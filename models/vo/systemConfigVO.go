@@ -39,4 +39,5 @@ type SystemConfigVO struct {
 	OpenDashboardNotification interface{} `json:"openDashboardNotification"`
 	DashboardNotification     string      `json:"dashboardNotification"`
 	ContentPicturePriority    interface{} `json:"contentPicturePriority"`
+	SearchModel               string    `json:"searchModel"`
 }
