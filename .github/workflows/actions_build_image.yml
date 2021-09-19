@@ -1,0 +1,50 @@
+name: Master-Build-Docker-Images
+
+#on:
+#  push:
+#    # 每次 push tag 时进行构建，不需要每次 push 都构建。使用通配符匹配每次 tag 的提交，记得 tag 名一定要以 v 开头
+#    tags:
+#      - v*
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  push:
+    # 如果需要在构建前进行测试的话需要取消下面的注释和上面对应的 test 动作的注释。
+    # needs: test
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/setup-buildx-action@v1
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+
+      # 构建镜像，指定镜像名
+      - name: Build MoguBlogGo Images
+        run: |
+
+          echo '=====开始构建镜像====='
+          docker build -t registry.cn-shenzhen.aliyuncs.com/mogublog/mogu_blog_go .
+          echo '=====镜像构建结束====='
+
+      # 登录到 阿里云镜像服务，使用 GitHub secrets 传入账号密码，密码被加密存储在 GitHub 服务器
+      - name: Login to Aliyun
+        uses: docker/login-action@v1
+        with:
+          registry: registry.cn-shenzhen.aliyuncs.com
+          username: ${{ secrets.ALIYUN_USER_NAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+
+      - name: Push Docker Image
+        run: |
+          echo '=====开始上传镜像====='
+          docker push registry.cn-shenzhen.aliyuncs.com/mogublog/mogu_blog_go
+
+          echo '=====镜像上传结束====='
