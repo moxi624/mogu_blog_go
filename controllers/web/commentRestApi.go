@@ -609,7 +609,8 @@ func (c *CommentRestApi) GetUserReceiveCommentCount() {
 	var user models.User
 	err1 := json.Unmarshal([]byte(userJson), &user)
 	if err1 != nil {
-		panic(err1)
+		c.Result("success", 0)
+		return
 	}
 	var commentCount = 0
 	// 评论数

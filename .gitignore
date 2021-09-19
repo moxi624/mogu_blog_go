@@ -18,6 +18,7 @@
 *.iml
 *.ipr
 *.iml
+*.tar.gz
 
 ### NetBeans ###
 /nbproject/private/
