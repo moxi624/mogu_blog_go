@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/rs/xid"
 	"mogu-go-v2/common"
+	"mogu-go-v2/common/enums"
 	"mogu-go-v2/controllers/base"
 	"mogu-go-v2/models"
 	"mogu-go-v2/models/vo"
@@ -29,7 +30,7 @@ func (c *CategoryMenuRestApi) GetAll() {
 		where += " and uid='" + keyword + "'"
 	}
 	var list []models.CategoryMenu
-	common.DB.Where(where, "1", 1, 0).Order("sort desc").Find(&list)
+	common.DB.Where(where, "1", enums.ENABLE, 0).Order("sort desc").Find(&list)
 	var ids []string
 	for _, item := range list {
 		if item.Uid != "" {
@@ -48,9 +49,15 @@ func (c *CategoryMenuRestApi) GetAll() {
 	common.DB.Where("status=? and parent_uid in ?", 1, secondMenuUids).Find(&buttonList)
 	m := map[string][]models.CategoryMenu{}
 	for _, item := range buttonList {
-		var tempList []models.CategoryMenu
-		tempList = append(tempList, item)
-		m[item.ParentUid] = tempList
+		tempList := m[item.ParentUid]
+		if tempList != nil {
+			tempList = append(tempList, item)
+			m[item.ParentUid] = tempList
+		} else {
+			var tempList []models.CategoryMenu
+			tempList = append(tempList, item)
+			m[item.ParentUid] = tempList
+		}
 	}
 	for i, item := range childList {
 		if len(m[item.Uid]) > 0 {

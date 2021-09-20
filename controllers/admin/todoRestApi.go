@@ -6,6 +6,7 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 	"github.com/rs/xid"
 	"mogu-go-v2/common"
+	"mogu-go-v2/common/enums"
 	"mogu-go-v2/controllers/base"
 	"mogu-go-v2/models"
 	"mogu-go-v2/models/page"
@@ -53,11 +54,11 @@ func (c *TodoRestApi) GetList() {
 	var total int64
 	c.Wg.Add(2)
 	go func() {
-		common.DB.Model(&models.Todo{}).Where(where, 1).Count(&total)
+		common.DB.Model(&models.Todo{}).Where(where, adminUid, enums.ENABLE).Count(&total)
 		c.Wg.Done()
 	}()
 	go func() {
-		common.DB.Where(where, adminUid, 1).Offset((todoVO.CurrentPage - 1) * todoVO.PageSize).Limit(todoVO.PageSize).Find(&pageList)
+		common.DB.Where(where, adminUid, enums.ENABLE).Offset((todoVO.CurrentPage - 1) * todoVO.PageSize).Limit(todoVO.PageSize).Find(&pageList)
 		c.Wg.Done()
 	}()
 	c.Wg.Wait()

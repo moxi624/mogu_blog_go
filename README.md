@@ -1,14 +1,52 @@
-# mogu-go-v2
+# 蘑菇博客Go版
+
+<p align=center>
+  <a href="http://www.moguit.cn">
+    <img src="./doc/images/gitee/favicon.ico" alt="蘑菇博客Go版" style="width:200px;height:200px">
+  </a>
+</p>
+<p align=center>
+   蘑菇博客Go版，一个基于Go语言的前后端分离博客系统
+</p>
+<p align="center">
+<a target="_blank" href="https://gitee.com/moxi159753/mogu_blog_go">
+<img src="https://gitee.com/moxi159753/mogu_blog_go/badge/star.svg?theme=dark" ></img>
+<img src="https://gitee.com/moxi159753/mogu_blog_go/badge/fork.svg?theme=dark" ></img>
+</a></p>
 
 ## 介绍
 
-根据 **Java** 开源微服务博客：[蘑菇博客](http://gitee.com/moxi159753/mogu_blog_v2) 改编的一个 **Golang** 简化版分支，实现了大部分基础功能，前端后数据库基本上没有改动，可以直接使用蘑菇博客原版的前端和数据库脚本。目前尚存在一些问题，后续将陆续完善。争取成为国内一个较为优秀的 **Golang** 博客和内容管理系统。基本框架才用简单易用的 **beego**，**orm** 框架采用国内广泛采用的 **gorm**。
+根据 **Java** 开源微服务博客：[蘑菇博客](http://gitee.com/moxi159753/mogu_blog_v2) 改编的一个 **Golang** 简化版分支，实现了大部分基础功能，前端后数据库基本上没有改动，可以直接使用蘑菇博客原版的前端和数据库脚本。目前尚存在一些问题，后续将陆续完善。争取成为国内一个较为优秀的 **Golang** 博客和内容管理系统。基本框架才用简单易用的 **beego**，**orm** 框架采用国内广泛采用的 **gorm**。因最近老林没有继续维护蘑菇 **Go** 版，因此特意 **clone** 项目后继续完善~。 
 
-因最近老林没有继续维护蘑菇 **Go** 版，因此特意 **clone** 项目后继续完善~。 
+##  运行配置
 
-## 官方网址
+蘑菇博客Go版目前使用了 **Redis**、**MySQL**、**Nginx ** 等中间件，对运行配置要求不高。
 
-[蘑菇博客GO](http://mogu-go.com)
+推荐配置：1核2G 【[需开启虚拟内存](http://moguit.cn/#/info?blogOid=96)】
+
+最近，腾讯云和阿里云的优惠力度非常大，如果有需求的小伙伴，可以了解一下~
+
+> 【阿里云】云服务器狂欢特惠，**2核2G5M** 轻量级应用服务器 **60** 元/年【博主目前使用】 [点我传送](https://www.aliyun.com/minisite/goods?userCode=w7aungxw)
+>
+> 【腾讯云】云产品限时秒杀，爆款 **2核4G8M** 云服务器，首年**74**元/年【博主强烈推荐】 [点我进入](https://curl.qcloud.com/zry6xub9)
+
+##  站点演示
+
+首先特别感谢群里小伙伴 **@泪梦红尘** 对蘑菇博客提供服务器支持。
+
+> 【演示前端】：http://go-web.moguit.cn
+>
+> 【演示后端】：http://go-admin.moguit.cn
+>
+> 【演示账号】：mogu2018  mogu2018
+
+## 一条命令部署
+
+在 **CentOS 7.X** 的服务器中，执行下面命令，完成蘑菇博客Go版的一键部署
+
+```bash
+wget http://oss.moguit.cn/script/moguGoInit.sh && chmod +x moguGoInit.sh && sh moguGoInit.sh
+```
 
 ## 安装教程
 
@@ -22,7 +60,7 @@ git clone https://gitee.com/moxi159753/mogu_blog_go.git
 
 下图是拉取仓库后的样子
 
-![image-20210323185800186](doc/images/ccd59b35e71344ca9ae3d9cecb36fc61)
+![image-20210323185800186](doc/images/readme/ccd59b35e71344ca9ae3d9cecb36fc61)
 
 ### 修改配置
 
@@ -49,7 +87,7 @@ data_web_url=http://localhost:8607
 
 同时还需要到 **mogu-go-v2/doc/SQL** 目录下，导入 **MySQL** 数据库脚本
 
-![image-20210323185538642](doc/images/a57dce8ea9db4a4b8cee1d2f85f08b2f)
+![image-20210323185538642](doc/images/readme/a57dce8ea9db4a4b8cee1d2f85f08b2f)
 
 ### 后台项目启动
 
@@ -74,7 +112,7 @@ go run main.go
 
 运行的过程中，即会进行依赖的安装，项目启动完成后运行在 **8607** 端口，如下图所示
 
-![image-20210323194121102](doc/images/a3549f7938734ab1bc57b27ebfea37f8)
+![image-20210323194121102](doc/images/readme/a3549f7938734ab1bc57b27ebfea37f8)
 
 ### 前台项目启动
 
@@ -88,7 +126,7 @@ go run main.go
 
 查看是否安装成功： **npm -v**
 
-![img](doc/images/92f1435bac514acd85abd1c56483d3b7)
+![img](doc/images/readme/92f1435bac514acd85abd1c56483d3b7)
 
 #### 拉取代码
 
@@ -127,7 +165,7 @@ npm install --registry=https://registry.npm.taobao.org
 
 另外因为 `node-sass` 是依赖 `python`环境的，如果你之前没有安装和配置过的话，需要自行查看一下相关安装教程。在启动项目成功后，会跳转到：[http://localhost:9528](http://localhost:9528/) ，我们输入账号密码： admin, mogu2018 访问即可
 
-![img](doc/images/1562769468634.png)
+![img](doc/images/readme/1562769468634.png)
 
 ### 启动 vue_mogu_web
 
@@ -146,7 +184,7 @@ npm run build
 
 下面是启动成功的界面，跳转到：[http://localhost:9527](http://localhost:9527/)
 
-![img](doc/images/068f23698a52468c8df0a84adb008521)
+![img](doc/images/readme/068f23698a52468c8df0a84adb008521)
 
 注意，如果登录后没有图片显示，那么我们需要进入到后台管理，配置一下**七牛云**文件存储，参考下面博客
 
@@ -154,7 +192,7 @@ npm run build
 
 目前暂不支持 本地存储和 Minio存储
 
-![image-20210323195931423](doc/images/d12be060dcf6406d81a991d36967bf96)
+![image-20210323195931423](doc/images/readme/d12be060dcf6406d81a991d36967bf96)
 
 配置完成后，我们到图片管理上传对应的图片即可~
 

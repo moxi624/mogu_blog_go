@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/rs/xid"
 	"mogu-go-v2/common"
+	"mogu-go-v2/common/enums"
 	"mogu-go-v2/controllers/base"
 	"mogu-go-v2/models"
 	"mogu-go-v2/models/page"
@@ -39,11 +40,11 @@ func (c *PictureRestApi) GetList() {
 	var total int64
 	c.Wg.Add(2)
 	go func() {
-		common.DB.Model(&models.Picture{}).Where(where, 1).Count(&total)
+		common.DB.Model(&models.Picture{}).Where(where, enums.ENABLE, pictureVO.PictureSortUid).Count(&total)
 		c.Wg.Done()
 	}()
 	go func() {
-		common.DB.Where(where, 1, pictureVO.PictureSortUid).Offset((pictureVO.CurrentPage - 1) * pictureVO.PageSize).Limit(pictureVO.PageSize).Order("create_time desc").Find(&pageList)
+		common.DB.Where(where, enums.ENABLE, pictureVO.PictureSortUid).Offset((pictureVO.CurrentPage - 1) * pictureVO.PageSize).Limit(pictureVO.PageSize).Order("create_time desc").Find(&pageList)
 		c.Wg.Done()
 	}()
 	c.Wg.Wait()
