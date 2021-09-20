@@ -1,9 +1,9 @@
 # 蘑菇博客Go版
 
 <p align=center>
-  <a href="http://www.moguit.cn">
-    <img src="./doc/images/gitee/favicon.ico" alt="蘑菇博客Go版" style="width:200px;height:200px">
-  </a>
+    <a href="http://www.moguit.cn">
+        <img src="./doc/images/gitee/favicon.ico" alt="蘑菇博客Go版" style="width:200px;height:200px">
+    </a>
 </p>
 <p align=center>
    蘑菇博客Go版，一个基于Go语言的前后端分离博客系统
