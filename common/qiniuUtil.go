@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/qiniu/api.v7/v7/auth/qbox"
 	"github.com/qiniu/api.v7/v7/storage"
-	"github.com/rs/xid"
 	"mogu-go-v2/models"
 )
 
@@ -18,7 +17,7 @@ import (
 
 type qiniuUtil struct{}
 
-func (qiniuUtil) UploadQiNiu(localFilePath string, qiNiuConfig models.SystemConfig) string {
+func (qiniuUtil) UploadQiNiu(fileName string, localFilePath string, qiNiuConfig models.SystemConfig) string {
 	accessKey := qiNiuConfig.QiNiuAccessKey
 	secretKey := qiNiuConfig.QiNiuSecretKey
 	bucket := qiNiuConfig.QiNiuBucket
@@ -36,8 +35,7 @@ func (qiniuUtil) UploadQiNiu(localFilePath string, qiNiuConfig models.SystemConf
 	cfg.UseCdnDomains = true
 	formUploader := storage.NewFormUploader(&cfg)
 	ret := storage.PutRet{}
-	key := "mogu-go/" + xid.New().String()
-	err := formUploader.PutFile(context.Background(), &ret, upToken, key, localFilePath, nil)
+	err := formUploader.PutFile(context.Background(), &ret, upToken, fileName, localFilePath, nil)
 	if err != nil {
 		fmt.Println(err)
 		return ""

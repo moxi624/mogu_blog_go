@@ -190,7 +190,7 @@ npm run build
 
 > 蘑菇博客配置七牛云：http://www.moguit.cn/#/info?blogOid=202
 
-目前暂不支持 本地存储和 Minio存储
+目前暂不支持本地存储
 
 ![image-20210323195931423](doc/images/readme/d12be060dcf6406d81a991d36967bf96)
 

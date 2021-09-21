@@ -37,11 +37,11 @@ func (c *SystemConfigRestApi) EditSystemConfig() {
 		panic(err)
 	}
 	switch {
-	case systemConfigVO.UploadLocal == "1" || systemConfigVO.UploadQiNiu == "0" || systemConfigVO.UploadMinio == "1":
-		c.ErrorWithMessage("图片必须上传到一个区域,且当前版本不支持本地和Minio存储！")
+	case systemConfigVO.UploadLocal == "1":
+		c.ErrorWithMessage("当前版本不支持本地存储！")
 		return
-	case systemConfigVO.PicturePriority != "1":
-		c.ErrorWithMessage("当前版本不支持本地和Minio存储！")
+	case systemConfigVO.PicturePriority == "0":
+		c.ErrorWithMessage("当前版本不支持本地存储！")
 		return
 	case systemConfigVO.StartEmailNotification == "1" && systemConfigVO.Email == "":
 		c.ErrorWithMessage("开启邮件通知必须设置邮箱地址")

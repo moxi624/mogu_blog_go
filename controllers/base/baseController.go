@@ -8,6 +8,7 @@ import (
 	"github.com/rs/xid"
 	"mime/multipart"
 	"mogu-go-v2/common"
+	"mogu-go-v2/common/enums"
 	"mogu-go-v2/models"
 	"mogu-go-v2/models/vo"
 	"mogu-go-v2/service"
@@ -464,15 +465,16 @@ func (c *BaseController) BatchUploadFile(filedatas []*multipart.FileHeader, syst
 			qiNiuUrl := ""
 			minioUrl := ""
 			tempFileData := filedata
-			if uploadQiNiu == "1" {
-				qiNiuUrl = c.uploadSingleFile(tempFileData, filename)
-			}
-			if uploadMinio == "1" {
-
-			}
 			if uploadLocal == "1" {
 
 			}
+			if uploadQiNiu == "1" {
+				qiNiuUrl = c.uploadSingleFile(tempFileData, filename, enums.UPLOAD_QI_NIU)
+			}
+			if uploadMinio == "1" {
+				minioUrl = c.uploadSingleFile(tempFileData, filename, enums.UPLOAD_MINIO)
+			}
+
 			var file models.File
 			if filename == "file" {
 				file = models.File{
@@ -489,20 +491,21 @@ func (c *BaseController) BatchUploadFile(filedatas []*multipart.FileHeader, syst
 					QiNiuUrl:        qiNiuUrl,
 					MinioUrl:        minioUrl,
 				}
-			}
-			file = models.File{
-				Uid:             xid.New().String(),
-				FileSortUid:     fileSort.Uid,
-				FileOldName:     oldName,
-				FileSize:        size,
-				PicExpandedName: picExpandedName,
-				PicName:         newFilename,
-				PicURL:          localUrl,
-				Status:          1,
-				UserUid:         userUid,
-				AdminUid:        adminUid,
-				QiNiuUrl:        qiNiuUrl,
-				MinioUrl:        minioUrl,
+			} else {
+				file = models.File{
+					Uid:             xid.New().String(),
+					FileSortUid:     fileSort.Uid,
+					FileOldName:     oldName,
+					FileSize:        size,
+					PicExpandedName: strings.ReplaceAll(picExpandedName, ".", ""),
+					PicName:         newFilename,
+					PicURL:          localUrl,
+					Status:          1,
+					UserUid:         userUid,
+					AdminUid:        adminUid,
+					QiNiuUrl:        qiNiuUrl,
+					MinioUrl:        minioUrl,
+				}
 			}
 			common.DB.Create(&file)
 			lists = append(lists, file)
@@ -520,13 +523,13 @@ func (c *BaseController) BatchUploadFile(filedatas []*multipart.FileHeader, syst
 	return m
 }
 
-func (c *BaseController) uploadSingleFile(mutipartFile *multipart.FileHeader, filename string) string {
-	url := ""
+func (c *BaseController) uploadSingleFile(mutipartFile *multipart.FileHeader, fileName string, uploadMethod int) string {
 	systemConfig := c.GetSystemConfig()
+	url := ""
 	oldName := mutipartFile.Filename
 	picExpandedName := path.Ext(oldName)
 	var newFilename string
-	if filename == "file" {
+	if fileName == "file" {
 		newFilename = strconv.FormatInt(time.Now().Unix(), 10) + ".png"
 	}
 	newFilename = strconv.FormatInt(time.Now().Unix(), 10) + picExpandedName
@@ -539,13 +542,25 @@ func (c *BaseController) uploadSingleFile(mutipartFile *multipart.FileHeader, fi
 		}
 	}
 	tempFiles := dir + newFilename
-	err1 := c.SaveToFile(filename, tempFiles)
+	err1 := c.SaveToFile(fileName, tempFiles)
 	if err1 != nil {
 		panic(err1)
 	}
-	url = common.QiniuUtil.UploadQiNiu(tempFiles, systemConfig)
+
+	if uploadMethod == enums.UPLOAD_LOCAL {
+		// 本地文件上传
+	} else if uploadMethod == enums.UPLOAD_QI_NIU {
+		url = common.QiniuUtil.UploadQiNiu(newFilename, tempFiles, systemConfig)
+	} else if uploadMethod == enums.UPLOAD_MINIO {
+		url = common.MinioUtil.UploadMinio(newFilename, tempFiles, systemConfig)
+	} else {
+		logs.Error("文件方式错误, UploadMethod: %s", uploadMethod)
+		panic("文件方式错误")
+	}
 	return url
 }
+
+
 
 func (c *BaseController) DeleteFileService(networkDiskVO vo.NetworkDiskVO, qiNiuConfig map[string]interface{}) {
 	uid := networkDiskVO.Uid
@@ -592,7 +607,8 @@ func (c *BaseController) DeleteFileService(networkDiskVO vo.NetworkDiskVO, qiNiu
 			common.QiniuUtil.DeleteFile(qiNiuUrl, qiNiuConfig)
 		}
 		if uploadMinio == "1" {
-
+			minioUrl := networkDisk.MinioUrl
+			common.MinioUtil.DeleteFile(minioUrl, qiNiuConfig)
 		}
 		storage := c.GetStorageByAdmin()
 		storageSize := storage.StorageSize - networkDisk.FileSize

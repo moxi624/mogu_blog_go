@@ -17,6 +17,7 @@ require (
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-runewidth v0.0.10 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.4
+	github.com/minio/minio-go/v7 v7.0.14 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/oklog/ulid/v2 v2.0.2
 	github.com/peterh/liner v1.2.1 // indirect
