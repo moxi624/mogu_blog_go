@@ -203,8 +203,6 @@ func (c *BlogRestApi) Edit() {
 		blog.Author = blogVO.Author
 		blog.ArticlesPart = blogVO.ArticlesPart
 	}
-	t := common.InterfaceToInt(blogVO.Type)
-	openComment := common.InterfaceToInt(blogVO.OpenComment)
 	blog.Title = blogVO.Title
 	blog.Summary = blogVO.Summary
 	blog.Content = blogVO.Content
@@ -214,8 +212,8 @@ func (c *BlogRestApi) Edit() {
 	blog.Level = blogVO.Level
 	blog.IsOriginal = blogVO.IsOriginal
 	blog.IsPublish = blogVO.IsPublish
-	blog.OpenComment = openComment
-	blog.Type = t
+	blog.OpenComment = blogVO.OpenComment
+	blog.Type = blogVO.Type
 	blog.OutsideLink = blogVO.OutsideLink
 	err1 := common.DB.Save(&blog).Error
 	isSave := true
@@ -275,8 +273,6 @@ func (c *BlogRestApi) Add() {
 		blog.Author = blogVO.Author
 		blog.ArticlesPart = blogVO.ArticlesPart
 	}
-	t := common.InterfaceToInt(blogVO.Type)
-	openComment := common.InterfaceToInt(blogVO.OpenComment)
 	blog.Uid = xid.New().String()
 	blog.Title = blogVO.Title
 	blog.Summary = blogVO.Summary
@@ -287,8 +283,8 @@ func (c *BlogRestApi) Add() {
 	blog.Level = blogVO.Level
 	blog.IsOriginal = blogVO.IsOriginal
 	blog.IsPublish = blogVO.IsPublish
-	blog.OpenComment = openComment
-	blog.Type = t
+	blog.OpenComment = blogVO.OpenComment
+	blog.Type = blogVO.Type
 	blog.OutsideLink = blogVO.OutsideLink
 	common.DB.Create(&blog)
 	common.RedisUtil.Delete("BLOG_LEVEL:" + strconv.Itoa(blog.Level))
@@ -421,8 +417,8 @@ func (c *BlogRestApi) UploadLocalBlog() {
 				FileUid:      picture.FileUid,
 				IsOriginal:   "1",
 				IsPublish:    "0",
-				OpenComment:  1,
-				Type:         0,
+				OpenComment:  "1",
+				Type:         "0",
 			}
 			blogList = append(blogList, blog)
 			count++
@@ -479,7 +475,6 @@ func (c *BlogRestApi) EditBatch() {
 	for i, blog := range blogList {
 		blogVO := blogVOMap[blog.Uid]
 		if !reflect.DeepEqual(blogVO, vo.BlogVO{}) {
-			_type := common.InterfaceToInt(blogVO.Type)
 			blogList[i].Author = blogVO.Author
 			blogList[i].ArticlesPart = blogVO.ArticlesPart
 			blogList[i].Title = blogVO.Title
@@ -492,7 +487,7 @@ func (c *BlogRestApi) EditBatch() {
 			blogList[i].IsOriginal = blogVO.IsOriginal
 			blogList[i].IsPublish = blogVO.IsPublish
 			blogList[i].Sort = blogVO.Sort
-			blogList[i].Type = _type
+			blogList[i].Type = blogVO.Type
 			blogList[i].OutsideLink = blogVO.OutsideLink
 		}
 		levels = append(levels, "BLOG_LEVEL:"+strconv.Itoa(blog.Level))

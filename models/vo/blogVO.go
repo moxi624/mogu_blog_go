@@ -25,7 +25,7 @@ type BlogVO struct {
 	Author            string          `json:"author"`
 	ArticlesPart      string          `json:"articlesPart"`
 	Level             int             `json:"level"`
-	Type              interface{}     `json:"type"`
+	Type              string          `json:"type"`
 	OutsideLink       string          `json:"outsideLink"`
 	Content           string          `json:"content"`
 	TagList           []models.Tag    `json:"tagList"`
@@ -36,7 +36,7 @@ type BlogVO struct {
 	LevelKeyword      interface{}     `json:"levelKeyword"`
 	UserSort          int             `json:"userSort"`
 	Sort              int             `json:"sort"`
-	OpenComment       interface{}     `json:"openComment"`
+	OpenComment       string          `json:"openComment"`
 	OrderByDescColumn string          `json:"orderByDescColumn"`
 	OrderByAscColumn  string          `json:"orderByAscColumn"`
 }

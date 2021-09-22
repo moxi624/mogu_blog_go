@@ -32,8 +32,8 @@ type Blog struct {
 	Level        int          `json:"level"`
 	IsPublish    string       `json:"isPublish"`
 	Sort         int          `json:"sort"`
-	OpenComment  int          `json:"openComment"`
-	Type         int          `json:"type"`
+	OpenComment  string       `json:"openComment"`
+	Type         string       `json:"type"`
 	OutsideLink  string       `json:"outsideLink"`
 	Oid          int          `json:"oid"`
 	TagList      []Tag        `gorm:"foreignKey:Uid;references:TagUid" json:"tagList"`

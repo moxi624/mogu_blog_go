@@ -330,7 +330,7 @@ func (c *CommentRestApi) Add() {
 	var blog models.Blog
 	if commentVO.BlogUid != "" {
 		common.DB.Where("uid=?", commentVO.BlogUid).Find(&blog)
-		if blog.OpenComment == 0 {
+		if blog.OpenComment == "0" {
 			c.Result("error", "博客未开启评论")
 			return
 		}
