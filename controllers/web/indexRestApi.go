@@ -100,15 +100,15 @@ func (c *IndexRestApi) GetWebConfig() {
 		case "1":
 			webConfig.Email = email
 		case "2":
-			webConfig.Email = qqNumber
+			webConfig.QqNumber = qqNumber
 		case "3":
-			webConfig.Email = qqGroup
+			webConfig.QqGroup = qqGroup
 		case "4":
-			webConfig.Email = github
+			webConfig.Github = github
 		case "5":
-			webConfig.Email = gitee
+			webConfig.Gitee = gitee
 		case "6":
-			webConfig.Email = webChat
+			webConfig.WeChat = webChat
 		}
 	}
 	b, _ := json.Marshal(webConfig)
