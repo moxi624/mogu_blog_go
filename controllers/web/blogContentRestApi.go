@@ -86,10 +86,9 @@ func setBlogCopyright(blog *models.Blog) {
 		reprintedTemplate, _ := beego.AppConfig.String("reprinted_template")
 		variable := []string{
 			blog.ArticlesPart,
-			blog.ArticlesPart,
 			blog.Author,
 		}
-		str := fmt.Sprintf(reprintedTemplate, variable)
+		str := fmt.Sprintf(reprintedTemplate, variable[0], variable[1])
 		blog.Copyright = str
 	}
 }
