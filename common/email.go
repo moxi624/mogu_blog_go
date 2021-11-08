@@ -288,7 +288,7 @@ func (*email) SendActiveEmail(user models.User, token string) {
 			"<div class=\"panel-body\">\r\n" +
 			"<p>您好 <a href=\"mailto:" + user.Email + "\" rel=\"noopener\" target=\"_blank\">" + user.NickName + "<wbr></a>！</p>\r\n" +
 			"<p>欢迎您注册" + projectName + "账号，请点击下方链接进行账号激活</p>\r\n" +
-			"<p>地址：" + "<a href=\"" + dataWebUrl + "/login/activeUser/" + token + "\">点击这里</a>" + "</p>\r\n" +
+			"<p>地址：" + "<a href=\"" + dataWebUrl + "/mogu-web/login/activeUser/" + token + "\">点击这里</a>" + "</p>\r\n" +
 			"\r\n" +
 			"</div>\r\n" +
 			"</div>\r\n" +
