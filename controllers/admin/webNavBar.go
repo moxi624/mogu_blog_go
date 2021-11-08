@@ -54,6 +54,7 @@ func (c *WebNavbarRestApi) Edit() {
 	webNavbar.IsJumpExternalUrl = webNavbarVO.IsJumpExternalUrl
 	webNavbar.Name = webNavbarVO.Name
 	webNavbar.Url = webNavbarVO.Url
+	webNavbar.IsShow = webNavbarVO.IsShow
 	common.DB.Save(&webNavbar)
 	c.SuccessWithData("更新成功")
 }
@@ -77,6 +78,7 @@ func (c *WebNavbarRestApi) Add() {
 		IsJumpExternalUrl: webNavbarVO.IsJumpExternalUrl,
 		Name:              webNavbarVO.Name,
 		Url:               webNavbarVO.Url,
+		IsShow:            webNavbarVO.IsShow,
 	}
 	common.DB.Create(&webNavbar)
 	c.SuccessWithMessage("新增成功")
