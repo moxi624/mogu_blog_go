@@ -61,7 +61,7 @@ func (c *ResourceSortRestApi) GetList() {
 	}
 	picList := common.WebUtil.GetPictureMap(pictureResult)
 	for _, item := range picList {
-		pictureMap["uid"] = item["url"].(string)
+		pictureMap[item["uid"].(string)] = item["url"].(string)
 	}
 	for i, item := range pageList {
 		if item.FileUid != "" {
